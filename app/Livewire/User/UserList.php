@@ -2,39 +2,35 @@
 
 namespace App\Livewire\User;
 
+use App\Models\User;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class UserList extends Component
 {
-    public string $name = "Джон";
-    public string $lastname;
-    public string $fullname;
-    public string $title;
-    public string $second_title;
-    public string $user;
+    public string $name;
+    public string $email;
+    public string $password;
 
-    public array $users = [
-        'Пользователь 1',
-        'Пользователь 2',
-        'Пользователь 3',
-    ];
-
-    public function mount($lastname = 'Гость'): void
+    public function addUser()
     {
-        $this->lastname = $lastname;
-        $this->fullname = $this->name . ' ' . $this->lastname;
+        User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => $this->password,
+        ]);
+        $this->reset('name', 'email', 'password');
     }
 
-    public function add()
+    public function deleteUser(int $id)
     {
-        $this->users[] = $this->user;
+        User::find($id)->delete();
     }
 
     public function render(): View
     {
         return view('livewire.user.user-list', [
-            'age' => 35
-        ])->with(['dog' => 'Шарик', 'cat' => 'Мурзик']);
+            'users' => User::all(),
+        ]);
     }
 }

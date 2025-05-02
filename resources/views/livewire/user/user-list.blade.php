@@ -1,23 +1,36 @@
-<div>
-    <h1>{{ $title }}</h1>
-    <h2>{{ $second_title }}</h2>
-    <input type="text" placeholder="Ничего нет..." wire:model.live="name">
-    <input type="text" placeholder="Ничего нет..." wire:model.live="age">
-    <input type="text" placeholder="Ничего нет..." wire:model.live="dog">
-    <input type="text" placeholder="Ничего нет..." wire:model.live="cat">
-    <p>Имя: {{ $name }}</p>
-    <p>Фамилия: {{ $lastname }}</p>
-    <p>Полное имя: {{ $fullname }}</p>
-    <p>Возраст: {{ $age }}</p>
-    <p>Собака: {{ $dog }}</p>
-    <p>Кошка: {{ $cat }}</p>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" wire:model="user">
-        <button class="btn btn-primary" wire:click="add">Добавить пользователя</button>
+<div class="row">
+    <div class="col-md-6">
+        <form wire:submit="addUser">
+            <div class="mb-3">
+                <input type="text" name="name" class="form-control" wire:model="name" placeholder="Имя пользователя">
+            </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" wire:model="email" placeholder="Электронная почта">
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" wire:model="password" placeholder="Введите пароль">
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <button type="submit" class="btn btn-primary my-2">Добавить пользователя</button>
+                <div wire:loading wire:target="addUser" class="spinner-border" role="status">
+                    <span class="visually-hidden">Сохранение...</span>
+                </div>
+            </div>
+        </form>
     </div>
-    <ul>
-        @foreach($users as $user)
-            <li>{{ $user }}</li>
-        @endforeach
-    </ul>
+    <div class="col-md-6">
+        <div class="d-flex align-items-center gap-3">
+            <button wire:click="$refresh" type="button" class="btn btn-success mb-2">Обновить данные</button>
+            <div wire:loading class="spinner-border" role="status">
+                <span class="visually-hidden">Обновление...</span>
+            </div>
+        </div>
+        <ul>
+            @forelse($users as $user)
+                <li wire:key="{{ $user->id }}">{{ $user->name }} ({{ $user->email }}) | <a href="#" wire:click.prevent="deleteUser({{ $user->id }})" wire:confirm="Вы уверены?">Удалить</a></li>
+            @empty
+                <p>Список пользователей пуст...</p>
+            @endforelse
+        </ul>
+    </div>
 </div>

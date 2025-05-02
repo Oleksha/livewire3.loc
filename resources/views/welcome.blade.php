@@ -25,12 +25,7 @@
     </div>
 </nav>
 <div class="container my-5">
-    @php
-        $title = 'Список пользователей!';
-        $second_title = 'Второй заголовок';
-    @endphp
-    <livewire:user.user-list lastname="Неизвестный" :title="$title" :$second_title/>
-    {{--@livewire('user.user-list', ['lastname' => 'Неизвестный', 'title' => $title, 'second_title' => $second_title])--}}
+    <livewire:user.user-list />
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
