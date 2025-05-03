@@ -15,11 +15,12 @@ class UserForm extends Form
     #[Validate('required|min:6')]
     public string $password = '';
 
-    public function saveUser(): void
+    public function saveUser()
     {
         $validated = $this->validate();
-        User::create($validated);
+        $user = User::create($validated);
         $this->reset();
         session()->flash('success', 'Пользователь успешно создан.');
+        return $user;
     }
 }
