@@ -1,17 +1,23 @@
 <div class="row">
     <div class="col-md-6">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+            </div>
+        @endif
         <form wire:submit="save">
             <div class="mb-3">
-                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" wire:model.blur="name" placeholder="Имя пользователя">
-                @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <input type="text" name="name" class="form-control @error('form.name') is-invalid @enderror" wire:model="form.name" placeholder="Имя пользователя">
+                @error('form.name')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.blur="email" placeholder="Электронная почта">
-                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <input type="email" class="form-control @error('form.email') is-invalid @enderror" wire:model="form.email" placeholder="Электронная почта">
+                @error('form.email')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control @error('password') is-invalid @enderror" wire:model.blur="password" placeholder="Введите пароль">
-                @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <input type="password" class="form-control @error('form.password') is-invalid @enderror" wire:model="form.password" placeholder="Введите пароль">
+                @error('form.password')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="d-flex align-items-center gap-3">
                 <button type="submit" class="btn btn-primary my-2">Добавить пользователя</button>
